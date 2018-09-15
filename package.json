@@ -1,0 +1,9 @@
+{
+  "name": "E6156",
+  "version": "0.0.1",
+  "description": "course project for E6156",
+  "main": "bin/www.js",
+  "repository": "git@github.com:zhuzilin/E6156.git",
+  "author": "zhuzilinallen@gmail.com",
+  "license": "MIT"
+}
