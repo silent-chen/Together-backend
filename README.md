@@ -1,8 +1,15 @@
 # E6156
-course project for E6156. Using express as backend.
+Backend for a microservice platform (:construction: under construction :construction:)
+
+## Tech Stack
+Using express.js (node.js) as backend. sequelize.js as ORM.
 
 ## Usage
-
+If have yarn installed (recommended!)
 ```[shell]
-yarn
+yarn && yarn start
+```
+else
+```[shell]
+npm install && npm start
 ```
