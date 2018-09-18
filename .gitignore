@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+# some extra ignore
+node_modules/
+.idea/

@@ -5,5 +5,18 @@
   "main": "bin/www.js",
   "repository": "git@github.com:zhuzilin/E6156.git",
   "author": "zhuzilinallen@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "debug": "^4.0.1",
+    "express": "^4.16.3",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.1",
+    "password-hash": "^1.2.2",
+    "sequelize": "^4.38.1"
+  }
 }

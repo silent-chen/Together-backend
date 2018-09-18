@@ -5,6 +5,4 @@ course project for E6156. Using express as backend.
 
 ```[shell]
 yarn
-yarn start
 ```
-
