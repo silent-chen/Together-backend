@@ -21,7 +21,22 @@ let CustomersDAO = function() {
 
     self.retrieveById = self.theDAO.retrieveById;
 
-    self.retrieveByTemplate = self.theDAO.retrieveByTemplate;
+    self.retrieveByTemplate = function(template, fields) {
+        logging.debug_message("template", template);
+        let template_without_pw = {...template};
+        delete template_without_pw.pw;
+        return new Promise(function(resolve, reject) {
+            self.theDAO.retrieveByTemplate(template_without_pw, fields).then(
+                function (result) {
+                    console.log(result);
+                    if("pw" in template) {
+                        resolve(result.filter((data) => (sandh.compare(template.pw, data.pw))));
+                    }
+                    resolve(result);
+                }
+            );
+        })
+    };
 
     self.create = function(data, context) {
         return new Promise(function(resolve, reject) {
@@ -37,7 +52,7 @@ let CustomersDAO = function() {
                     result.id = id;
                     resolve(result);
                 }
-            )
+            );
         });
     };
 

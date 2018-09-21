@@ -36,9 +36,9 @@ app.use('/', function(req, res, next) {
 // Connect paths to route handlers.
 // I have had problems with the Router module in Express and do it this way.
 // This could all be driven off of a config file.
-app.get('/customers/:id', customers.getById);
-app.get('/customers', customers.getByQuery);
-app.post('/customers', customers.post);
+app.get('/api/customers/:id', customers.getById);
+app.get('/api/customers', customers.getByQuery);
+app.post('/api/customers', customers.post);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
