@@ -6,8 +6,7 @@ const customersCollection = {
     name: "customers",
     attribute: {
         id: {type: 'string', allowNull: false, field: 'customers_id', primaryKey: true},
-        lastName: {type: 'string', allowNull: false, field: "customers_lastname"},
-        firstName: {type: 'string', allowNull: false, field: "customers_firstname"},
+        username: {type: 'string', allowNull: false, field: "customers_username"},
         email: {type: 'string', allowNull: false, field: "customers_email"},
         status: {type: 'string', allowNull: false, field: 'customers_status'},
         pw: {type: 'string', allowNull: false, field: 'customers_password'},

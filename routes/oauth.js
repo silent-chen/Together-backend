@@ -30,12 +30,12 @@ let post = function(req, response, next) {
                 (res)=>{
                     console.log("User data: ", res.data);
                     response.setHeader('Content-Type', 'application/json');
-                    response.send(JSON.stringify({ authorized: true, data: { email: res.data.email, name: res.data.name } }));
+                    response.send(JSON.stringify({ authorized: true, data: { email: res.data.email, username: res.data.login } }));
                 }
             )
         }, (err)=>{
             console.log("post err");
-            JSON.stringify({ authorized: false });
+            response.send(JSON.stringify({ authorized: false }));
         });
     }
 }
