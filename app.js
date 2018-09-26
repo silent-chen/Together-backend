@@ -10,6 +10,7 @@ let bodyParser = require('body-parser');
 let logging = require('./utils/logging');
 
 let customers = require('./routes/customers');
+let oauth = require('./routes/oauth');
 
 const app = express();
 
@@ -39,6 +40,8 @@ app.use('/', function(req, res, next) {
 app.get('/api/customers/:id', customers.getById);
 app.get('/api/customers', customers.getByQuery);
 app.post('/api/customers', customers.post);
+
+app.post('/api/oauth', oauth.post);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

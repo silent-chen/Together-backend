@@ -1,5 +1,3 @@
-let express = require('express');
-
 let logging = require('../utils/logging');
 let return_codes = require('../utils/return_codes');
 let bo = require('../resources/bo/customers');
@@ -8,7 +6,7 @@ let moduleName="customers.";
 
 let post = function(req, res, next) {
 
-    let functionName="post:";  // ???
+    let functionName="post:";
 
     let data = req.body;
     let context = {tenant: req.tenant};

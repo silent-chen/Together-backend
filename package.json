@@ -1,7 +1,7 @@
 {
-  "name": "E6156",
+  "name": "Together",
   "version": "0.0.1",
-  "description": "course project for E6156",
+  "description": "A social networking service for organizing activities",
   "main": "bin/www.js",
   "repository": "git@github.com:zhuzilin/E6156.git",
   "author": "zhuzilinallen@gmail.com",
@@ -10,6 +10,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "debug": "^4.0.1",
