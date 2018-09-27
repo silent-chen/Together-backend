@@ -129,5 +129,5 @@ let Dao = function(collection) {
 };
 
 exports.Dao = Dao;
-//exports.sequelize = sequelize;
-//exports.preprocess = preprocess;
+exports.sequelize = sequelize;
+exports.preprocess = preprocess;
