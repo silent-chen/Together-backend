@@ -14,16 +14,13 @@ let moduleName = "customersbo.";  // ???
 
 // Do something clever to generate IDs that people can remember.
 // This does not count as clever.
-let generateId = function(lastName, firstName) {
-    let p1 = firstName.substr(0,2);
-    let p2 = lastName.substr(0,2);
-    let p3 = String(Math.floor(Math.random() * 100));
-    return p1 + p2 + p3;
+let generateId = function(username) {
+    return username +  String(Math.floor(Math.random() * 100));
 };
 
 
 // Business logic may dictate that not all parameters are queryable.
-let validQParams = ['lastName', 'firstName', 'email', 'status'];
+let validQParams = ['lastName', 'firstName', 'email', 'status', 'pw'];
 let validateQueryParameters = function(template) {
     let keys = Object.keys(template);
     for (let i = 0; i < keys.length; i++) {
@@ -89,9 +86,8 @@ exports.create = function(data, context) {
     return new Promise(function (resolve, reject) {
 
         // Lucky guess?
-        data.id = generateId(data.lastName, data.firstName);
+        data.id = generateId(data.username);
         data.status = "PENDING"; // Until confirmation is always PENDING.
-
         if (!validateCreateData(data)) {
             reject(return_codes.codes.invalid_create_data);
         }

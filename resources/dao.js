@@ -130,4 +130,8 @@ let Dao = function(collection) {
 
 exports.Dao = Dao;
 exports.sequelize = sequelize;
+<<<<<<< HEAD
 exports.preprocess = preprocess;
+=======
+exports.preprocess = preprocess;
+>>>>>>> 80e137cc8e65a5ce1dd5871434c1a311ca39c48a

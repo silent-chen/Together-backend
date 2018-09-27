@@ -5,7 +5,7 @@ const preprocess = Dao.preprocess;
 
 const customersCollection = {
     id: {type: 'string', allowNull: false, field: 'customers_id'},
-    lastName: {type: 'string', allowNull: false, field: "customers_lastname"},
+    username: {type: 'string', allowNull: false, field: "customers_user"},
     firstName: {type: 'string', allowNull: false, field: "customers_firstname"},
 };
 

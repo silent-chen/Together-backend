@@ -6,8 +6,7 @@ const customersCollection = {
     name: "customers",
     attribute: {
         id: {type: 'string', allowNull: false, field: 'customers_id', primaryKey: true},
-        lastName: {type: 'string', allowNull: false, field: "customers_lastname"},
-        firstName: {type: 'string', allowNull: false, field: "customers_firstname"},
+        username: {type: 'string', allowNull: false, field: "customers_username"},
         email: {type: 'string', allowNull: false, field: "customers_email"},
         status: {type: 'string', allowNull: false, field: 'customers_status'},
         pw: {type: 'string', allowNull: false, field: 'customers_password'},
@@ -21,7 +20,22 @@ let CustomersDAO = function() {
 
     self.retrieveById = self.theDAO.retrieveById;
 
-    self.retrieveByTemplate = self.theDAO.retrieveByTemplate;
+    self.retrieveByTemplate = function(template, fields) {
+        logging.debug_message("template", template);
+        let template_without_pw = {...template};
+        delete template_without_pw.pw;
+        return new Promise(function(resolve, reject) {
+            self.theDAO.retrieveByTemplate(template_without_pw, fields).then(
+                function (result) {
+                    console.log(result);
+                    if("pw" in template) {
+                        resolve(result.filter((data) => (sandh.compare(template.pw, data.pw))));
+                    }
+                    resolve(result);
+                }
+            );
+        })
+    };
 
     self.create = function(data, context) {
         return new Promise(function(resolve, reject) {
@@ -37,7 +51,7 @@ let CustomersDAO = function() {
                     result.id = id;
                     resolve(result);
                 }
-            )
+            );
         });
     };
 
