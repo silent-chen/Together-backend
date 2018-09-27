@@ -2,10 +2,9 @@ const env = {
     local: {
         database: "E6156",
         username: "root",
-        password: "dh51dl725",
+        password: "zhuzilin",
         options: {
             host: 'localhost',
-	    port: 3306,
             dialect: 'mysql',
             operatorsAliases: false,
 
