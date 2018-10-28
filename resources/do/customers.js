@@ -50,17 +50,50 @@ let CustomersDAO = function() {
                     }
                     result.id = id;
                     resolve(result);
+                },
+                function (error){
+                    // rejection
+                    console.error(error.message)
                 }
+
             );
         });
     };
 
     self.update = function(template, fields) {
-
+        return new Promise(function(resolve, reject){
+            self.theDAO.update(template,fields).then(
+                function(result){
+                    if (result === undefined || result === null) {
+                        result = {};
+                    }
+                    resolve(result)
+                },
+                function (error) {
+                    // rejection
+                    console.error(error.message)
+                }
+            )
+        });
     };
 
-    self.delete = function(template) {
-
+    self.delete = function(template,context) {
+        let id = context.tenant;
+        return new Promise(function(resolve, reject){
+            self.theDAO.delete(template).then(
+                function(result){
+                    if (result === undefined || result === null) {
+                        result = {};
+                    }
+                    result.id = id;
+                    resolve(result)
+                },
+                function (error) {
+                    // rejection
+                    console.error(error.message)
+                }
+            )
+        });
     };
 };
 

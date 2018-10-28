@@ -35,7 +35,7 @@ let validateQueryParameters = function(template) {
 // Same ID for checking create information.
 let validateCreateData = function(data) {
     // I feel lucky.
-    return true;
+    return true
 };
 
 // I did not do this as a JavaScript "class." No particular reason.
@@ -103,15 +103,33 @@ exports.create = function(data, context) {
                 }
             );
         }
-
     });
 };
 
 
 exports.delete = function(template, context) {
+    customersdo.delete(template).then(
+        function (result) {
+            //logging.debug_message(moduleName + functionName + "Result = ", result);
+            resolve(result);
+        },
+        function (error) {
+            logging.error_message(moduleName + functionName + "error = ", error);
+            reject(return_codes.codes.internal_error);
+        }
+    );
 
 };
 
 exports.update = function(template, fields, context) {
-
+    customersdo.update(template,fields).then(
+        function (result) {
+            //logging.debug_message(moduleName + functionName + "Result = ", result);
+            resolve(result);
+        },
+        function (error) {
+            logging.error_message(moduleName + functionName + "error = ", error);
+            reject(return_codes.codes.internal_error);
+        }
+    );
 };
