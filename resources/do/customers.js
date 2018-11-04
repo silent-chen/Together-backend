@@ -22,7 +22,7 @@ let CustomersDAO = function() {
 
     self.retrieveByTemplate = function(template, fields) {
         logging.debug_message("template", template);
-        let template_without_pw = {...template};
+        let template_without_pw = Object.assign({}, template);
         delete template_without_pw.pw;
         return new Promise(function(resolve, reject) {
             self.theDAO.retrieveByTemplate(template_without_pw, fields).then(
