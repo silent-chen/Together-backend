@@ -93,6 +93,8 @@ let getByQuery =  function(req, res, next) {
 
     context = {tenant: req.tenant};
 
+    res.set('Access-Control-Allow-Origin', '*');
+
     let fields = [];
     try {
         if (req.query && req.query.fields) {

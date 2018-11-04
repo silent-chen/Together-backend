@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const logging =require('../utils/logging');
 
-let environment_name = process.env.eb2_environment;
+let environment_name = process.env.eb_environment;
 if(!environment_name) {
     environment_name = 'local';
 }

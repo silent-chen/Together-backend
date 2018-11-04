@@ -3,6 +3,14 @@ const logging = require('../utils/logging');
 const moduleName = 'OAuth';
 const axios = require('axios');
 
+let environment_name = process.env.eb_environment;
+if(!environment_name) {
+    environment_name = 'local';
+}
+logging.debug_message("environment_name = ", environment_name);
+
+const env = require('../env').getEnv(environment_name);
+
 let post = function(req, response, next) {
 
     let functionName = "post:";
@@ -13,8 +21,8 @@ let post = function(req, response, next) {
 
     logging.debug_message(moduleName + functionName + "body  = ", data);
     if(site === 'github') {
-        const client_id = '15545471f76a112c2ae9';
-        const client_secret = 'd7aa0f2fcfcb5d5efd7e937d485ee2f9760b6a8c';
+        const client_id = env.github.client_id;
+        const client_secret = env.github.client_secret;
         axios.post('https://github.com/login/oauth/access_token', {
             client_id,
             client_secret,
