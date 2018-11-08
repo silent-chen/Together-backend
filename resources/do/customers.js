@@ -58,41 +58,34 @@ let CustomersDAO = function() {
 
             );
         });
-    };
 
-    self.update = function(template, fields) {
-        return new Promise(function(resolve, reject){
-            self.theDAO.update(template,fields).then(
-                function(result){
+    }
+
+    self.update = function(template, update, fields) {
+        return new Promise(function(resolve,reject){
+            self.theDAO.update(template,update,fields).then(
+                function (result) {
                     if (result === undefined || result === null) {
                         result = {};
                     }
-                    resolve(result)
-                },
-                function (error) {
-                    // rejection
-                    console.error(error.message)
+                    console.log(result);
+                    resolve(result);
                 }
-            )
+            );
         });
-    };
+    }
 
-    self.delete = function(template,context) {
-        let id = context.tenant;
-        return new Promise(function(resolve, reject){
-            self.theDAO.delete(template).then(
-                function(result){
+    self.delete = function(template,fields) {
+        return new Promise(function(resolve,reject){
+            self.theDAO.delete(template,fields).then(
+                function (result) {
                     if (result === undefined || result === null) {
                         result = {};
                     }
-                    result.id = id;
-                    resolve(result)
-                },
-                function (error) {
-                    // rejection
-                    console.error(error.message)
+                    console.log(result);
+                    resolve(result);
                 }
-            )
+            );
         });
     };
 };
