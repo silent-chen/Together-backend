@@ -53,14 +53,34 @@ let CustomersDAO = function() {
                 }
             );
         });
-    };
+    }
 
-    self.update = function(template, fields) {
+    self.update = function(template, update, fields) {
+        return new Promise(function(resolve,reject){
+            self.theDAO.update(template,update,fields).then(
+                function (result) {
+                    if (result === undefined || result === null) {
+                        result = {};
+                    }
+                    console.log(result);
+                    resolve(result);
+                }
+            );
+        });
+    }
 
-    };
-
-    self.delete = function(template) {
-
+    self.delete = function(template,fields) {
+        return new Promise(function(resolve,reject){
+            self.theDAO.delete(template,fields).then(
+                function (result) {
+                    if (result === undefined || result === null) {
+                        result = {};
+                    }
+                    console.log(result);
+                    resolve(result);
+                }
+            );
+        });
     };
 };
 

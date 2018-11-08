@@ -38,6 +38,11 @@ let validateCreateData = function(data) {
     return true;
 };
 
+let validateUpdate = function(data) {
+    // I feel lucky.
+    return true;
+};
+
 // I did not do this as a JavaScript "class." No particular reason.
 exports.retrieveById = function(id, fields, context) {
     let functionName = "retrieveById:";
@@ -108,10 +113,40 @@ exports.create = function(data, context) {
 };
 
 
-exports.delete = function(template, context) {
+exports.delete = function(template, fields) {
+    let functionName = "delete";
 
+    return new Promise(function (resolve,reject) {
+
+            customersdo.delete(template, fields).then(
+                function(result){
+                    resolve(result)
+                },
+                function(error){
+                    console.error_message(moduleName + functionName + "error = ", error);
+                    reject(return_codes.codes.internal_error);
+                }
+            )
+    });
 };
 
 exports.update = function(template, fields, context) {
+    let functionName = "update";
 
+    return new Promise(function (resolve,reject) {
+        if (!validateUpdate){
+            reject(return_codes.codes.invalid_create_data);
+        }
+        else{
+            customersdo.update(template, fields, context).then(
+                function(result){
+                    resolve(result)
+                },
+                function(error){
+                    console.error_message(moduleName + functionName + "error = ", error);
+                    reject(return_codes.codes.internal_error);
+                }
+            )
+        }
+    })
 };
