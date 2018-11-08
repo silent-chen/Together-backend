@@ -64,3 +64,4 @@ env.js
 # some extra ignore
 node_modules/
 .idea/
+.DS_Store
