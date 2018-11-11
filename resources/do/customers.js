@@ -22,17 +22,11 @@ let CustomersDAO = function() {
 
     self.retrieveByTemplate = function(template, fields) {
         logging.debug_message("template", template);
-        let template_without_pw = Object.assign({}, template);
-        delete template_without_pw.pw;
         return new Promise(function(resolve, reject) {
-            self.theDAO.retrieveByTemplate(template_without_pw, fields).then(
+            self.theDAO.retrieveByTemplate(template, fields).then(
                 function (result) {
-                    console.log(result);
-                    if("pw" in template) {
-                        resolve(result.filter((data) => (sandh.compare(template.pw, data.pw))));
-                    }
                     resolve(result);
-                }
+                }, reject
             );
         })
     };
@@ -68,7 +62,6 @@ let CustomersDAO = function() {
                     if (result === undefined || result === null) {
                         result = {};
                     }
-                    console.log(result);
                     resolve(result);
                 }
             );
@@ -82,7 +75,6 @@ let CustomersDAO = function() {
                     if (result === undefined || result === null) {
                         result = {};
                     }
-                    console.log(result);
                     resolve(result);
                 }
             );

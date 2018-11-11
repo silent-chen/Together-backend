@@ -20,7 +20,7 @@ let generateId = function(username) {
 
 
 // Business logic may dictate that not all parameters are queryable.
-let validQParams = ['lastName', 'firstName', 'email', 'status', 'pw'];
+let validQParams = ['username', 'email', 'status', 'pw'];
 let validateQueryParameters = function(template) {
     let keys = Object.keys(template);
     for (let i = 0; i < keys.length; i++) {
@@ -63,7 +63,7 @@ exports.retrieveById = function(id, fields, context) {
 
 exports.retrieveByTemplate = function(template, fields, context) {
     let functionName = "retrieveByTemplate";
-
+    logging.debug_message(moduleName, functionName, ": ", template, fields, context);
     return new Promise(function (resolve, reject) {
 
         if (!validateQueryParameters(template)) {
