@@ -6,6 +6,7 @@ let environment_name = process.env.eb_environment;
 if(!environment_name) {
     environment_name = 'local';
 }
+
 logging.debug_message("environment_name = ", environment_name);
 
 const env = require('../env').getEnv(environment_name);
@@ -56,7 +57,7 @@ let registerCollection = function(c) {
 
 let Dao = function(collection) {
 
-    self = this;
+    self = this; // what is this?
 
     self.collection = {...collection, attribute: preprocess(collection.attribute)};
 

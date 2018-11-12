@@ -19,12 +19,20 @@ const env = {
             client_id: "19921c3b8c557fb175dc",
             client_secret: "59150926138e67a27b7d5bd09846d79de57b0d26"
         }
+        // TODO
+        // Facebook
+
+        // Google
+
+        // Twitter
+
+
 
     },
     local: {
         database: "E6156",
         username: "root",
-        password: "19960925yy",
+        password: "123456",
         options: {
             host: 'localhost',
             dialect: 'mysql',
@@ -42,6 +50,12 @@ const env = {
             client_id: "15545471f76a112c2ae9",
             client_secret: "d7aa0f2fcfcb5d5efd7e937d485ee2f9760b6a8c"
         }
+        // TODO
+        // Facebook
+
+        // Google
+
+        // Twitter
     }
 };
 

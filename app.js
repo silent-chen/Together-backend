@@ -7,8 +7,8 @@ let path = require('path');
 let morgan = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
-let logging = require('./utils/logging');
 
+let logging = require('./utils/logging');
 let customers = require('./routes/customers');
 let oauth = require('./routes/oauth');
 
