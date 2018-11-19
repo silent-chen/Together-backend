@@ -24,7 +24,7 @@ const env = {
     local: {
         database: "E6156",
         username: "root",
-        password: "zhuzilin",
+        password: "dh51dl725",
         options: {
             host: 'localhost',
             dialect: 'mysql',
