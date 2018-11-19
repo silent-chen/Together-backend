@@ -61,6 +61,7 @@ let Dao = function(collection) {
     self.collection = {...collection, attribute: preprocess(collection.attribute)};
 
     self.model = registerCollection(self.collection);
+
     // with sequelize, the find by id will directly find by primary key
     self.retrieveById = function(id) {
         return new Promise(function(resolve, reject) {

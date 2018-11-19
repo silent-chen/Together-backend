@@ -54,7 +54,7 @@ exports.retrieveById = function(id, fields, context) {
                 resolve(result);
             },
             function (error) {
-                logging.error_message(moduleName + functionName + "error = ", error);
+                logging.error_message(moduleName + functionName + " error = ", error);
                 reject(return_codes.codes.internal_error);
             }
         )
@@ -76,7 +76,7 @@ exports.retrieveByTemplate = function(template, fields, context) {
                     resolve(result);
                 },
                 function (error) {
-                    logging.error_message(moduleName + functionName + "error = ", error);
+                    logging.error_message(moduleName + functionName + " error = ", error);
                     reject(return_codes.codes.internal_error);
                 }
             );

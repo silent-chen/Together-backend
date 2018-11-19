@@ -6,9 +6,7 @@ let authorize = function(req, res, next) {
     console.log("Original URL = " + req.originalUrl);
     let claims = null;
     let authorized = false;
-    console.log("token: ", req.headers);
     if (req.headers['authorization']) {
-        console.log(req.headers['authorization']);
         claims = security.get_claims_from_token(req.headers['authorization']);
         console.log(claims);
         if (claims) {

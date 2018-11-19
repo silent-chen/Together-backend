@@ -17,7 +17,6 @@ const customersCollection = {
 let CustomersDAO = function() {
     const self = this;
     self.theDAO = new Dao.Dao(customersCollection);
-
     self.retrieveById = self.theDAO.retrieveById;
 
     self.retrieveByTemplate = function(template, fields) {
@@ -26,7 +25,7 @@ let CustomersDAO = function() {
             self.theDAO.retrieveByTemplate(template, fields).then(
                 function (result) {
                     resolve(result);
-                }, reject
+                }, function (err) { reject(err) }
             );
         })
     };
@@ -47,7 +46,8 @@ let CustomersDAO = function() {
                 },
                 function (error){
                     // rejection
-                    console.error(error.message)
+                    console.error(error.message);
+                    reject(error);
                 }
 
             );

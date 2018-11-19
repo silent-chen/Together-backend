@@ -11,6 +11,8 @@ let logging = require('./utils/logging');
 let middleware = require('./utils/middlewares');
 
 let customers = require('./routes/customers');
+let profile = require('./routes/profile');
+let post = require('./routes/post');
 let login = require('./routes/login');
 let register = require('./routes/register');
 let oauth = require('./routes/oauth');
@@ -28,15 +30,21 @@ app.use(middleware.authorize);
 
 // use middleware to get the tenant for req
 app.use(function(req, res, next) {
-    logging.debug_message("headers = ", req.headers);
     let dnsFields = req.headers['host'].split('.');
     req.tenant = dnsFields[0];
     next();
 });
 
-app.get('/api/customers/:id', customers.getById);
 app.get('/api/customers', customers.getByQuery);
 app.post('/api/customers', customers.post);
+// get profile for a user
+app.get('/api/customers/:username', profile.get);
+// get post with search
+app.get('/api/post', post.search);
+app.get('/api/post/:username', post.getByUsername);
+app.post('/api/post/:username', post.post);
+app.delete('/api/post/:username', post.del);
+
 app.post('/api/register', register.post);
 app.post('/api/login', login.post);
 app.post('/api/oauth', oauth.post);
