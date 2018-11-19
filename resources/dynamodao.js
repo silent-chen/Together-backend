@@ -1,10 +1,16 @@
 let AWS = require('aws-sdk');
 let doc = require('dynamodb-doc');
 
-// Load the AWS API Key from my local, private configuration file.
-let credentials = new AWS.SharedIniFileCredentials();
-// Set the credential.
-AWS.config.credentials = credentials;
+let environment_name = process.env.eb_environment;
+if(!environment_name) {
+    environment_name = 'local';
+}
+if(environment_name === 'local') {
+    // Load the AWS API Key from my local, private configuration file.
+    let credentials = new AWS.SharedIniFileCredentials();
+    // Set the credential.
+    AWS.config.credentials = credentials;
+}
 
 AWS.config.update({region: 'us-east-1'});
 let dynamo = new AWS.DynamoDB.DocumentClient();
