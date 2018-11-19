@@ -12,6 +12,7 @@ let middleware = require('./utils/middlewares');
 
 let customers = require('./routes/customers');
 let login = require('./routes/login');
+let register = require('./routes/register');
 let oauth = require('./routes/oauth');
 
 const app = express();
@@ -36,7 +37,7 @@ app.use(function(req, res, next) {
 app.get('/api/customers/:id', customers.getById);
 app.get('/api/customers', customers.getByQuery);
 app.post('/api/customers', customers.post);
-app.post('/api/register', customers.post);
+app.post('/api/register', register.post);
 app.post('/api/login', login.post);
 app.post('/api/oauth', oauth.post);
 
