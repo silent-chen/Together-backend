@@ -42,6 +42,7 @@ app.get('/api/post', post.search);
 app.get('/api/post/:username', post.getByUsername);
 app.post('/api/post/:username', post.post);
 app.delete('/api/post/:username', post.del);
+
 // friend
 app.get('/api/friends', friends.get);
 app.post('/api/friends', friends.post);

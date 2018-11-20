@@ -1,6 +1,10 @@
 const pdo = require("../do/post");
 const postdo = new pdo.PostDao();
 
+exports.search = function(template, fields) {
+    return postdo.getByTemplate(template, fields);
+};
+
 exports.getByUsername = function(username, field) {
     return postdo.getByPartitionKey({username}, field);
 };
@@ -18,4 +22,4 @@ exports.create = function(data) {
             reject(err);
         });
     })
-}
+};

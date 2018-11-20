@@ -74,8 +74,23 @@ class DynamoDao{
     };
 
     getByTemplate(template, fields) {
+        console.log("getByTemplate: ", template);
+        let expression = {};
+        let filter = "username IN (";
+        expression[`:users${0}`] = template.users[0];
+        filter += `:users${0}`;
+        for (let i =1; i<template.users.length; i++) {
+            expression[`:users${i}`] = template.users[i];
+            filter += `, :users${i}`;
+        }
+        filter += ')';
+        let params = {
+            TableName : this.config.tableName,
+            FilterExpression : filter,
+            ExpressionAttributeValues : expression
+        };
+        console.log(params);
         return new Promise(function(resolve, reject) {
-            let params = template;
             dynamo.scan(params, function(err, result) {
                 if (err)
                     reject(err);

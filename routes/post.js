@@ -5,7 +5,17 @@ let bo = require('../resources/bo/post');
 let moduleName="post.";
 
 let search = function(req, res, next) {
+    let functionName="getByUsername";
 
+    logging.debug_message(moduleName+functionName + " tenant  = ", req.tenant);
+    logging.debug_message(moduleName+functionName + " query  = ", req.query);
+
+    bo.search(req.query).then((result) => {
+        res.status(200).json(result.Items);
+    }, (err) => {
+        console.log(err);
+        res.status(500).send("Internal error.");
+    })
 };
 
 let getByUsername =  function(req, res, next) {
@@ -20,7 +30,6 @@ let getByUsername =  function(req, res, next) {
         console.log(err);
         res.status(500).send("Internal error.");
     })
-
 };
 
 let post = function(req, res, next) {
