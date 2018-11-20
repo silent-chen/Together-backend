@@ -10,7 +10,9 @@ let search = function(req, res, next) {
     logging.debug_message(moduleName+functionName + " tenant  = ", req.tenant);
     logging.debug_message(moduleName+functionName + " query  = ", req.query);
 
-    bo.search(req.query).then((result) => {
+    let users = JSON.parse(req.query.users);
+    logging.debug_message(moduleName+functionName + " users  = ", req.users);
+    bo.search({users}).then((result) => {
         res.status(200).json(result.Items);
     }, (err) => {
         console.log(err);
