@@ -1,6 +1,6 @@
 const DynamoDao = require('../dynamodao');
 
-config = {
+const config = {
     tableName: "together_post",
     partitionKey: "username",
     sortKey: "create_time"

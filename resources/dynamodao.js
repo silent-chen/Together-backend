@@ -37,7 +37,7 @@ class DynamoDao{
         return new Promise(function(resolve, reject) {
             let params = {};
             params.Key = {[config.partitionKey]: id[config.partitionKey],
-                [this.config.sortKey]: id[this.config.sortKey]};
+                [config.sortKey]: id[config.sortKey]};
             params.TableName = config.tableName;
             dynamo.get(params, function(err, result) {
                 if (err) {
@@ -86,6 +86,7 @@ class DynamoDao{
 
     // delete one item
     delete(id) {
+        const config = this.config;
         return new Promise(function(resolve, reject) {
             let params = {};
             params.Key = {[this.config.partitionKey]: id[this.config.partitionKey],
@@ -104,6 +105,7 @@ class DynamoDao{
 
     // create one item
     create(data) {
+        const config = this.config;
         return new Promise(function(resolve, reject) {
             let params = {};
             params.Item = data;

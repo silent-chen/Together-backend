@@ -1,86 +1,57 @@
-let Dao = require("../dao");
+const DynamoDao = require('../dynamodao');
 let logging = require('../../utils/logging');
-let sandh = require('../../utils/salthash');
 
-const friendsCollection = {
-    name: "friends",
-    attribute: {
-        id: {type: 'string', allowNull: false, field: 'friends_relationship_id', primaryKey: true},
-        user_id: {type: 'string', allowNull: false, field: "user_id"},
-        friend_id: {type: 'string', allowNull: false, field: "friend_id"},
-        tenant_id: {type: 'string', allowNull: false, field: 'tenant_id'}
-    }
+const config = {
+    tableName: "together_friends",
+    partitionKey: "username",
+    sortKey: "friend_name"
 };
 
-let FriendsDAO = function() {
-    const self = this;
-    self.theDAO = new Dao.Dao(friendsCollection);
-    self.retrieveById = self.theDAO.retrieveById;
+class FriendsDao {
+    constructor() {
+        this.theDao = new DynamoDao.DynamoDao(config);
+        this.getByPartitionKey.bind(this);
+        this.getById.bind(this);
+        this.delete.bind(this);
+        this.create.bind(this);
+    }
 
-    self.retrieveByTemplate = function(template, fields) {
-        logging.debug_message("template", template);
+    getByPartitionKey(template, fields) {
+        const theDao = this.theDao;
         return new Promise(function(resolve, reject) {
-            self.theDAO.retrieveByTemplate(template, fields).then(
-                function (result) {
-                    resolve(result);
-                }, function (err) { reject(err) }
-            );
+            theDao.getByPartitionKey(template, fields).then((res) => {
+                resolve(res.Items);
+            }, reject)
         })
     };
 
-    self.create = function(data, context) {
-        console.log(data)
-        console.log(context)
+    getById(id, fields) {
+        const theDao = this.theDao;
         return new Promise(function(resolve, reject) {
-            data.tenant_id = context.tenant;
-            // data.user_id=context.user_id;
-            // data.friend_id=context.friend_id;
-            let id = data.id;
-
-            self.theDAO.create(data).then(
-                function (result) {
-                    if (result === undefined || result === null) {
-                        result = {};
-                    }
-                    result.id = id;
-                    resolve(result);
-                },
-                function (error){
-                    // rejection
-                    console.error(error.message);
-                    reject(error);
-                }
-
-            );
-        });
-
-    }
-
-    self.update = function(template, update, fields) {
-        return new Promise(function(resolve,reject){
-            self.theDAO.update(template,update,fields).then(
-                function (result) {
-                    if (result === undefined || result === null) {
-                        result = {};
-                    }
-                    resolve(result);
-                }
-            );
-        });
-    }
-
-    self.delete = function(template,fields) {
-        return new Promise(function(resolve,reject){
-            self.theDAO.delete(template,fields).then(
-                function (result) {
-                    if (result === undefined || result === null) {
-                        result = {};
-                    }
-                    resolve(result);
-                }
-            );
-        });
+            theDao.getByPartitionKey(id, fields).then((res) => {
+                resolve(res.Items);
+            }, reject)
+        })
     };
-};
 
-exports.FriendsDAO = FriendsDAO;
+    // delete one item
+    delete(id) {
+        return this.theDao.delete(id);
+    };
+
+    // create one item
+    create(data) {
+        const theDao = this.theDao;
+        return new Promise(function(resolve, reject) {
+            theDao.create(data).then((res) => {
+                console.log("postdo.create: ", res);
+                resolve(res);
+            }, (err) => {
+                console.log(err);
+                reject(err);
+            })
+        })
+    };
+}
+
+exports.FriendsDao = FriendsDao;

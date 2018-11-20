@@ -11,7 +11,7 @@ let logging = require('./utils/logging');
 let middleware = require('./utils/middlewares');
 
 let customers = require('./routes/customers');
-let profile = require('./routes/profile');
+let friends = require('./routes/friends');
 let post = require('./routes/post');
 let login = require('./routes/login');
 let register = require('./routes/register');
@@ -37,13 +37,15 @@ app.use(function(req, res, next) {
 
 app.get('/api/customers', customers.getByQuery);
 app.post('/api/customers', customers.post);
-// get profile for a user
-app.get('/api/customers/:username', profile.get);
-// get post with search
+// post
 app.get('/api/post', post.search);
 app.get('/api/post/:username', post.getByUsername);
 app.post('/api/post/:username', post.post);
 app.delete('/api/post/:username', post.del);
+// friend
+app.get('/api/friends', friends.get);
+app.post('/api/friends', friends.post);
+app.get('/api/friends/:username', friends.getByUsername);
 
 app.post('/api/register', register.post);
 app.post('/api/login', login.post);
