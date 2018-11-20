@@ -39,11 +39,13 @@ class DynamoDao{
             params.Key = {[config.partitionKey]: id[config.partitionKey],
                 [config.sortKey]: id[config.sortKey]};
             params.TableName = config.tableName;
+            console.log(params);
             dynamo.get(params, function(err, result) {
                 if (err) {
                     reject(err)
                 }
                 else {
+                    console.log("dynamo.get.result: ", result);
                     resolve(result);
                 }
             });

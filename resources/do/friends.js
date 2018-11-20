@@ -28,8 +28,8 @@ class FriendsDao {
     getById(id, fields) {
         const theDao = this.theDao;
         return new Promise(function(resolve, reject) {
-            theDao.getByPartitionKey(id, fields).then((res) => {
-                resolve(res.Items);
+            theDao.getById(id, fields).then((res) => {
+                resolve(res);
             }, reject)
         })
     };

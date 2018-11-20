@@ -34,11 +34,11 @@ let get = function(req, res, next) {
     try {
         bo.getById(username, friend_name).then(
             function(result) {
-                console.log(result);
-                if(result.length === 0)
+                logging.debug_message(moduleName+functionName + "result  = ", result);
+                if(result.Item === undefined)
                     res.status(200).json("stranger");
                 else
-                    res.status(201).json(result[0].status);
+                    res.status(201).json(result.Item.status);
             },
             function(error) {
                 console.log(error);
