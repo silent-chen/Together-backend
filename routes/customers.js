@@ -91,18 +91,12 @@ let getByQuery =  function(req, res, next) {
     logging.debug_message("params  = ", req.params);
     logging.debug_message("query  = ", req.query);
 
-    context = {tenant: req.tenant};
-
-    res.set('Access-Control-Allow-Origin', '*');
-
-    let fields = [];
+    let context = {tenant: req.tenant};
+    let fields = {};
     try {
         if (req.query && req.query.fields) {
             fields = req.query.fields.split(',');
             delete req.query.fields;
-        }
-        else {
-            fields = {}
         }
 
         logging.debug_message('customers.get: query = ', req.query);
@@ -129,7 +123,7 @@ let getByQuery =  function(req, res, next) {
     }
     catch (e) {
         logging.error_message("e = " + e);
-        res.status(500).send("Boom!");
+        res.status(500).send("Boom in getByQuery!", e);
     }
 };
 
