@@ -90,10 +90,12 @@ let Dao = function(collection) {
 
     self.update = function(template, updates, fields) {
         return new Promise(function(resolve, reject) {
+            console.log("update");
             self.model.update(updates, {
                 where: template,
                 ...fields
             }).then((result) => {
+                console.log("update2");
                 resolve(result);
             }, (error) => {
                 logging.debug_message("Boom in update = " + error);
@@ -104,10 +106,12 @@ let Dao = function(collection) {
 
     self.delete = function(template, fields) {
         return new Promise(function(resolve, reject) {
+            console.log("delete");
             self.model.destroy({
                 where: template,
                 ...fields
             }).then((result) => {
+                console.log("delete2");
                 resolve(result);
             }, (error) => {
                 logging.debug_message("Boom in delete = " + error);
@@ -118,7 +122,9 @@ let Dao = function(collection) {
 
     self.create = function(data, fields) {
         return new Promise(function(resolve, reject) {
+            console.log("create");
             self.model.create(data, fields).then((result) => {
+                console.log("create");
                 resolve(result);
             }, (error) => {
                 logging.debug_message("Boom in create = " + error);

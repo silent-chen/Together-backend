@@ -59,7 +59,7 @@ let CustomersDAO = function() {
             );
         });
 
-    }
+    };
 
     self.update = function(template, update, fields) {
         return new Promise(function(resolve,reject){
@@ -73,7 +73,7 @@ let CustomersDAO = function() {
                 }
             );
         });
-    }
+    };
 
     self.delete = function(template,fields) {
         return new Promise(function(resolve,reject){
