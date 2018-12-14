@@ -8,7 +8,7 @@ let moduleName="register.";
 let post = function(req, res, next) {
     let functionName="post: ";
 
-    console.log("this is the body",req.body);
+    console.log(req.body);
     let data = req.body;
     let context = {tenant: req.tenant};
 
