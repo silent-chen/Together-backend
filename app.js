@@ -9,55 +9,50 @@ let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 
 let logging = require('./utils/logging');
+let middleware = require('./utils/middlewares');
+
+
+let logging = require('./utils/logging');
 let customers = require('./routes/customers');
+let friends = require('./routes/friends');
+let post = require('./routes/post');
+let login = require('./routes/login');
+let register = require('./routes/register');
 let oauth = require('./routes/oauth');
 
 const app = express();
 
 // http request log to terminal
 app.use(morgan('dev'));
-
-// extract the entire body portion of an incoming request stream
-// and exposes it on req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// Parse Cookie header and populate req.cookies
-// with an object keyed by the cookie names.
 app.use(cookieParser());
 
-// add header and return for OPTIONS request
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-
-    //intercepts OPTIONS method
-    if ('OPTIONS' === req.method) {
-        //respond with 200
-        res.send(200);
-    }
-    else {
-        //move on
-        next();
-    }
-});
+app.use(middleware.cors);
+app.use(middleware.authorize);
 
 // use middleware to get the tenant for req
-app.use('/', function(req, res, next) {
-    logging.debug_message("headers = ", req.headers);
+app.use(function(req, res, next) {
     let dnsFields = req.headers['host'].split('.');
     req.tenant = dnsFields[0];
     next();
 });
 
-// Connect paths to route handlers.
-// I have had problems with the Router module in Express and do it this way.
-// This could all be driven off of a config file.
-app.get('/api/customers/:id', customers.getById);
 app.get('/api/customers', customers.getByQuery);
 app.post('/api/customers', customers.post);
+// post
+app.get('/api/post', post.search);
+app.get('/api/post/:username', post.getByUsername);
+app.post('/api/post/:username', post.post);
+app.delete('/api/post/:username', post.del);
 
+// friend
+app.get('/api/friends', friends.get);
+app.post('/api/friends', friends.post);
+app.get('/api/friends/:username', friends.getByUsername);
+
+app.post('/api/register', register.post);
+app.post('/api/login', login.post);
 app.post('/api/oauth', oauth.post);
 
 // catch 404 and forward to error handler

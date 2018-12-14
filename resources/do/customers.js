@@ -5,9 +5,9 @@ let sandh = require('../../utils/salthash');
 const customersCollection = {
     name: "customers",
     attribute: {
-        id: {type: 'string', allowNull: false, field: 'customers_id', primaryKey: true},
+        id: {type: 'string', allowNull: false, field: 'customers_id'},
         username: {type: 'string', allowNull: false, field: "customers_username"},
-        email: {type: 'string', allowNull: false, field: "customers_email"},
+        email: {type: 'string', allowNull: false, field: "customers_email", primaryKey: true},
         status: {type: 'string', allowNull: false, field: 'customers_status'},
         pw: {type: 'string', allowNull: false, field: 'customers_password'},
         tenant_id: {type: 'string', allowNull: false, field: 'tenant_id'}
@@ -17,22 +17,15 @@ const customersCollection = {
 let CustomersDAO = function() {
     const self = this;
     self.theDAO = new Dao.Dao(customersCollection);
-
     self.retrieveById = self.theDAO.retrieveById;
 
     self.retrieveByTemplate = function(template, fields) {
         logging.debug_message("template", template);
-        let template_without_pw = Object.assign({}, template);
-        delete template_without_pw.pw;
         return new Promise(function(resolve, reject) {
-            self.theDAO.retrieveByTemplate(template_without_pw, fields).then(
+            self.theDAO.retrieveByTemplate(template, fields).then(
                 function (result) {
-                    console.log(result);
-                    if("pw" in template) {
-                        resolve(result.filter((data) => (sandh.compare(template.pw, data.pw))));
-                    }
                     resolve(result);
-                }
+                }, function (err) { reject(err) }
             );
         })
     };
@@ -53,13 +46,14 @@ let CustomersDAO = function() {
                 },
                 function (error){
                     // rejection
-                    console.error(error.message)
+                    console.error(error.message);
+                    reject(error);
                 }
 
             );
         });
 
-    }
+    };
 
     self.update = function(template, update, fields) {
         return new Promise(function(resolve,reject){
@@ -68,12 +62,11 @@ let CustomersDAO = function() {
                     if (result === undefined || result === null) {
                         result = {};
                     }
-                    console.log(result);
                     resolve(result);
                 }
             );
         });
-    }
+    };
 
     self.delete = function(template,fields) {
         return new Promise(function(resolve,reject){
@@ -82,7 +75,6 @@ let CustomersDAO = function() {
                     if (result === undefined || result === null) {
                         result = {};
                     }
-                    console.log(result);
                     resolve(result);
                 }
             );

@@ -8,6 +8,8 @@ cbo.create({
 }, {tenant: "Mr. Watson"});
 */
 
-cbo.retrieveByTemplate({}, {}).then((result) => {
+cbo.retrieveByTemplate({username: "zhuzilin"}, {}).then((result) => {
     console.log(result);
+}, (error) => {
+    console.log(error);
 });
