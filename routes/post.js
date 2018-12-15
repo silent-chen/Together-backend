@@ -13,7 +13,7 @@ let search = function(req, res, next) {
     let users = JSON.parse(req.query.users);
     logging.debug_message(moduleName+functionName + " users  = ", req.users);
     bo.search({users}).then((result) => {
-        res.status(200).json(result.Items);
+        res.status(200).json(result);
     }, (err) => {
         console.log(err);
         res.status(500).send("Internal error.");

@@ -1,4 +1,5 @@
 const DynamoDao = require('../dynamodao');
+const upload = require('../../utils/upload');
 
 const config = {
     tableName: "together_post",
@@ -17,20 +18,47 @@ class PostDao {
     }
 
     getById(id, field) {
-        return this.theDao.getById(id).then();
+        return this.theDao.getById(id);
     };
 
     getByPartitionKey(template, fields) {
         const theDao = this.theDao;
         return new Promise(function(resolve, reject) {
             theDao.getByPartitionKey(template, fields).then((res) => {
-                resolve(res.Items);
+                return Promise.all(res.Items.map((item) => {
+                    if(null !== item.image)
+                        return upload.downloadImage({Key: item.image});
+                    else
+                        return null;
+                })).then((data) => {
+                    for(let i=0; i<data.length; i++)
+                        if(null !== res.Items[i].image)
+                            res.Items[i].image = data[i];
+                    console.log("items:", res.Items);
+                    resolve(res.Items);
+                });
             }, reject)
         })
     };
 
     getByTemplate(template, fields) {
-        return this.theDao.getByTemplate(template, fields);
+        const theDao = this.theDao;
+        return new Promise(function(resolve, reject) {
+            theDao.getByTemplate(template, fields).then((res) => {
+                return Promise.all(res.Items.map((item) => {
+                    if(null !== item.image)
+                        return upload.downloadImage({Key: item.image});
+                    else
+                        return null;
+                })).then((data) => {
+                    for(let i=0; i<data.length; i++)
+                        if(null !== res.Items[i].image)
+                            res.Items[i].image = data[i];
+                    console.log("items:", res.Items);
+                    resolve(res.Items);
+                });
+            }, reject)
+        });
     };
 
     // delete one item

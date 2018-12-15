@@ -127,6 +127,7 @@ class DynamoDao{
             let params = {};
             params.Item = data;
             params.TableName =  config.tableName;
+            console.log("dynamodb.create: ", params);
             dynamo.put(params, function(err, result) {
                 if (err) {
                     reject(err)
