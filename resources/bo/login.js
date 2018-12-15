@@ -5,11 +5,11 @@ const return_codes = require('../../utils/return_codes');
 let logging = require('../../utils/logging');
 
 let login = function(data, context) {
-    let email = data.email;
+    let username = data.username;
     let pw = data.pw;
-
+    let method = data.method;
     return new Promise(function(resolve, reject) {
-        cbo.retrieveByTemplate({ email }).then(
+        cbo.retrieveByTemplate({ username, method }).then(
             function(c) {
                 if(c.length === 0) {
                     reject(return_codes.codes.login_failure);
