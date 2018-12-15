@@ -22,7 +22,7 @@ let searchUsers =  function(req, res, next) {
 
         logging.debug_message('customers.get: query = ', req.query);
 
-        let searchItem = req.query.username;
+        let searchItem = req.query.search;
         searchItem = '%' + searchItem + '%';
         console.log(searchItem);
         let template = {
