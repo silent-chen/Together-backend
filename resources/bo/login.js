@@ -36,7 +36,8 @@ let login = function(data, context) {
             },
             function(error) {
                 context.adminOperation = false;
-                logging.error_message("logonbo.login: error = " + error);
+                logging.error_message("logonbo.login: error = ");
+                console.log(error);
                 reject(return_codes.codes.internal_error);
             }
         )

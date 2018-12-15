@@ -18,6 +18,7 @@ let login = require('./routes/login');
 let register = require('./routes/register');
 let oauth = require('./routes/oauth');
 let search = require('./routes/search');
+let check = require('./routes/check');
 
 const app = express();
 
@@ -57,6 +58,8 @@ app.post('/api/oauth', oauth.post);
 // search users
 app.get('/api/search', search.searchUsers);
 
+//check the username
+app.get('/api/check', check.checkUsername);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     let err = new Error('Not Found');

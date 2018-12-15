@@ -42,7 +42,8 @@ let whiteList = [
     "oauth",
     "post",
     "friends",
-    "search"
+    "search",
+    "check"
 ];
 
 exports.inWhitelist = function(url) {
