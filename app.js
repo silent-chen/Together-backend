@@ -23,7 +23,7 @@ const app = express();
 
 // http request log to terminal
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '2mb'}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
@@ -43,7 +43,7 @@ app.post('/api/customers', customers.post);
 app.get('/api/post', post.search);
 app.get('/api/post/:username', post.getByUsername);
 app.post('/api/post/:username', post.post);
-app.delete('/api/post/:username', post.del);
+app.delete('/api/post', post.del);
 
 // friend
 app.get('/api/friends', friends.get);
@@ -69,7 +69,6 @@ app.use(function(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-
     // render the error page
     res.status(err.status || 500).json({ error: err.status || 500 });
 });

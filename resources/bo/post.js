@@ -1,5 +1,9 @@
 const pdo = require("../do/post");
+const logger = require('../../utils/logging');
+const upload = require('../../utils/upload');
 const postdo = new pdo.PostDao();
+
+const moduleName = 'postbo';
 
 exports.search = function(template, fields) {
     return postdo.getByTemplate(template, fields);
@@ -10,16 +14,33 @@ exports.getByUsername = function(username, field) {
 };
 
 // delete one item
-exports.delete = postdo.delete;
+exports.del = function(post) {
+    return postdo.del(post);
+};
 
 // create one item
 exports.create = function(data) {
-    return new Promise(function(resolve, reject) {
-        postdo.create(data).then((res) => {
-            resolve(res)
+    const functionName = '.create';
+    logger.debug_message(moduleName+functionName + ": ");
+    if(data.post === "")
+        delete data.post;
+    if(data.image !== "") {
+        let name = Math.floor(Math.random()*10000).toString();
+        let img = {
+            Key: name,
+            Body: data.image,
+            ContentEncoding: 'base64',
+            ContentType: 'text/plain'
+        };
+        data.image = name;
+        return upload.uploadImage(img).then((res) => {
+            return postdo.create(data);
         }, (err) => {
             console.log("postbo.create: ", err);
-            reject(err);
-        });
-    })
+        })
+    }
+    else {
+        delete data.image;
+        return postdo.create(data);
+    }
 };
