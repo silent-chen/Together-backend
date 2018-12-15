@@ -12,7 +12,7 @@ let register = function(data, context) {
                 return cbo.retrieveByTemplate({email:data.email})
             }
             else {
-                reject("username has existed")
+                resolve("username exists")
             }
         })
             .then((result)=>{
@@ -21,7 +21,7 @@ let register = function(data, context) {
                     return cbo.create(data, context);
                 }
                 else {
-                    reject("email has existed")
+                    resolve("email exists")
                 }
             })
             .then(

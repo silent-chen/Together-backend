@@ -59,8 +59,6 @@ let post = function(req, res, next) {
         console.log(e);
         res.status(500).send("Internal error");
     }
-
-
 };
 
 let del = function(req, res, next) {

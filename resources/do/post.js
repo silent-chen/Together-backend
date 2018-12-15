@@ -26,15 +26,14 @@ class PostDao {
         return new Promise(function(resolve, reject) {
             theDao.getByPartitionKey(template, fields).then((res) => {
                 return Promise.all(res.Items.map((item) => {
-                    if(null !== item.image)
+                    if(undefined !== item.image)
                         return upload.downloadImage({Key: item.image});
                     else
                         return null;
                 })).then((data) => {
                     for(let i=0; i<data.length; i++)
-                        if(null !== res.Items[i].image)
+                        if(undefined !== res.Items[i].image)
                             res.Items[i].image = data[i];
-                    console.log("items:", res.Items);
                     resolve(res.Items);
                 });
             }, reject)
@@ -46,15 +45,14 @@ class PostDao {
         return new Promise(function(resolve, reject) {
             theDao.getByTemplate(template, fields).then((res) => {
                 return Promise.all(res.Items.map((item) => {
-                    if(null !== item.image)
+                    if(undefined !== item.image)
                         return upload.downloadImage({Key: item.image});
                     else
                         return null;
                 })).then((data) => {
                     for(let i=0; i<data.length; i++)
-                        if(null !== res.Items[i].image)
+                        if(undefined !== res.Items[i].image)
                             res.Items[i].image = data[i];
-                    console.log("items:", res.Items);
                     resolve(res.Items);
                 });
             }, reject)

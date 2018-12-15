@@ -16,10 +16,14 @@ let post = function(req, res, next) {
     logging.debug_message(moduleName+functionName + "body  = ", data);
 
     bo.register(data, context).then((result) => {
-        res.status(201).json(result);
+        console.log(result);
+        if(typeof result === "string")
+            res.status(200).send(result);
+        else
+            res.status(201).send(result);
     }, (err) => {
         logging.error_message(moduleName+functionName + " error = ", err);
-        res.status(401).json(err);
+        res.status(400).json(err);
     })
 };
 
