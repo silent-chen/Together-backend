@@ -11,14 +11,13 @@ let bodyParser = require('body-parser');
 let logging = require('./utils/logging');
 let middleware = require('./utils/middlewares');
 
-
-let logging = require('./utils/logging');
 let customers = require('./routes/customers');
 let friends = require('./routes/friends');
 let post = require('./routes/post');
 let login = require('./routes/login');
 let register = require('./routes/register');
 let oauth = require('./routes/oauth');
+let search = require('./routes/search');
 
 const app = express();
 
@@ -54,6 +53,9 @@ app.get('/api/friends/:username', friends.getByUsername);
 app.post('/api/register', register.post);
 app.post('/api/login', login.post);
 app.post('/api/oauth', oauth.post);
+
+// search users
+app.get('/api/search', search.searchUsers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
