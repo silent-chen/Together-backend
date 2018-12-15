@@ -43,7 +43,8 @@ let whiteList = [
     "post",
     "friends",
     "search",
-    "check"
+    "check",
+    "verify"
 ];
 
 exports.inWhitelist = function(url) {

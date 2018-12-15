@@ -19,6 +19,7 @@ let register = require('./routes/register');
 let oauth = require('./routes/oauth');
 let search = require('./routes/search');
 let check = require('./routes/check');
+let verify = require('./routes/verify');
 
 const app = express();
 
@@ -60,6 +61,10 @@ app.get('/api/search', search.searchUsers);
 
 //check the username
 app.get('/api/check', check.checkUsername);
+
+//change email status
+app.post('/api/verify', verify.changeStatus);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     let err = new Error('Not Found');
