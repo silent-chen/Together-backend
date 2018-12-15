@@ -6,11 +6,12 @@ const customersCollection = {
     name: "customers",
     attribute: {
         id: {type: 'string', allowNull: false, field: 'customers_id'},
-        username: {type: 'string', allowNull: false, field: "customers_username"},
-        email: {type: 'string', allowNull: false, field: "customers_email", primaryKey: true},
+        username: {type: 'string', allowNull: false, field: "customers_username", primaryKey: true},
+        email: {type: 'string', allowNull: false, field: "customers_email"},
         status: {type: 'string', allowNull: false, field: 'customers_status'},
         pw: {type: 'string', allowNull: false, field: 'customers_password'},
-        tenant_id: {type: 'string', allowNull: false, field: 'tenant_id'}
+        tenant_id: {type: 'string', allowNull: false, field: 'tenant_id'},
+        method: {type: 'string',allowNull: false, field: 'entrance_method'}
     }
 };
 
