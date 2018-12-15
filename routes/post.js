@@ -62,7 +62,26 @@ let post = function(req, res, next) {
 };
 
 let del = function(req, res, next) {
-
+    let data = req.body;
+    let functionName = '.del ';
+    logging.debug_message(moduleName+functionName + "body  = ", data);
+    try {
+        bo.del(data).then(
+            function(result) {
+                if (result) {
+                    console.log(result);
+                    res.status(200).json(result);
+                }
+            },
+            function(error) {
+                console.log(error);
+                res.status(500).send("Internal error")
+            }
+        );
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Internal error");
+    }
 };
 
 exports.search = search;

@@ -13,7 +13,7 @@ class PostDao {
         this.getById.bind(this);
         this.getByPartitionKey.bind(this);
         this.getByTemplate.bind(this);
-        this.delete.bind(this);
+        this.del.bind(this);
         this.create.bind(this);
     }
 
@@ -60,8 +60,8 @@ class PostDao {
     };
 
     // delete one item
-    delete(id) {
-        return this.theDao.delete(id);
+    del(id) {
+        return this.theDao.del(id);
     };
 
     // create one item

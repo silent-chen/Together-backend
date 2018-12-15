@@ -14,7 +14,9 @@ exports.getByUsername = function(username, field) {
 };
 
 // delete one item
-exports.delete = postdo.delete;
+exports.del = function(post) {
+    return postdo.del(post);
+};
 
 // create one item
 exports.create = function(data) {

@@ -30,7 +30,6 @@ app.use(middleware.authorize);
 
 // use middleware to get the tenant for req
 app.use(function(req, res, next) {
-    console.log(req.headers);
     let dnsFields = req.headers['host'].split('.');
     req.tenant = dnsFields[0];
     next();
@@ -42,7 +41,7 @@ app.post('/api/customers', customers.post);
 app.get('/api/post', post.search);
 app.get('/api/post/:username', post.getByUsername);
 app.post('/api/post/:username', post.post);
-app.delete('/api/post/:username', post.del);
+app.delete('/api/post', post.del);
 
 // friend
 app.get('/api/friends', friends.get);

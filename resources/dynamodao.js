@@ -28,7 +28,7 @@ class DynamoDao{
         this.getById.bind(this);
         this.getByPartitionKey.bind(this);
         this.getByTemplate.bind(this);
-        this.delete.bind(this);
+        this.del.bind(this);
         this.create.bind(this);
     }
 
@@ -102,12 +102,12 @@ class DynamoDao{
     };
 
     // delete one item
-    delete(id) {
+    del(id) {
         const config = this.config;
         return new Promise(function(resolve, reject) {
             let params = {};
-            params.Key = {[this.config.partitionKey]: id[this.config.partitionKey],
-                [this.config.sortKey]: id[this.config.sortKey]};
+            params.Key = {[config.partitionKey]: id[config.partitionKey],
+                [config.sortKey]: id[config.sortKey]};
             params.TableName = config.tableName;
             dynamo.delete(params, function(err, result) {
                 if (err) {
