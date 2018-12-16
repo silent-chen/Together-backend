@@ -54,6 +54,7 @@ app.get('/api/friends/:username', friends.getByUsername);
 
 app.post('/api/register', register.post);
 app.post('/api/login', login.post);
+app.get('/api/oauth',oauth.get);
 app.post('/api/oauth', oauth.post);
 
 // search users
