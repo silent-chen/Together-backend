@@ -11,13 +11,14 @@ let changeStatus = function(req, res, next){
     let token = req.body.token;
     let user  = jwt.get_claims_from_token(token);
     let username = user.username;
+    console.log("user", user);
     bo.update({username},{status:"VERIFIED"}).then(
         function (result) {
             if (result[0]) {
-                res.status(200).json(result);
+                res.status(200).json({verified: true});
             }
             else {
-                res.status(404).send("Not found!")
+                res.status(200).json({verified: false});
             }
         },
         function (error) {

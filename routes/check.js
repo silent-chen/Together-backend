@@ -28,7 +28,7 @@ let checkUsername =  function(req, res, next) {
                     res.status(200).json({check: false})
                 }
                 else {
-                    res.status(200).json({check: true})
+                    res.status(200).json({check: true, data: result[0]})
                 }
             },
             function (error) {

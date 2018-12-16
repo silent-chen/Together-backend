@@ -4,6 +4,15 @@ const return_codes = require('../../utils/return_codes');
 const logging = require('../../utils/logging');
 const notification = require('../../utils/notification');
 
+let environment_name = process.env.eb_environment;
+if(!environment_name) {
+    environment_name = 'local';
+}
+
+logging.debug_message("environment_name = ", environment_name);
+
+const env = require('../../env').getEnv(environment_name);
+
 let register = function(data, context) {
     return new Promise(function(resolve, reject) {
         cbo.retrieveByTemplate({username: data.username}).then(
@@ -31,6 +40,7 @@ let register = function(data, context) {
                 result.token = claim;
                 result.username = c.username;
                 resolve(result);
+                data.env = env;
                 notification.registrationNotification(data);
             },
             function(error) {
