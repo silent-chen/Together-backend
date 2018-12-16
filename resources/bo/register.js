@@ -6,10 +6,10 @@ const notification = require('../../utils/notification');
 
 let register = function(data, context) {
     return new Promise(function(resolve, reject) {
-        cbo.retrieveByTemplate({username:data.username}).then(
+        cbo.retrieveByTemplate({username: data.username}).then(
             (result) => {
             if (result.length === 0){
-                return cbo.retrieveByTemplate({email:data.email})
+                return cbo.retrieveByTemplate({email: data.email, method: data.method})
             }
             else {
                 resolve("username exists")

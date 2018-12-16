@@ -20,7 +20,7 @@ let generateId = function(username) {
 
 
 // Business logic may dictate that not all parameters are queryable.
-let validQParams = ['username', 'email', 'status', 'pw','method'];
+let validQParams = ['username', 'email', 'status', 'pw', 'method'];
 let validateQueryParameters = function(template) {
     let keys = Object.keys(template);
     for (let i = 0; i < keys.length; i++) {
