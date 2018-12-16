@@ -1,9 +1,6 @@
 const cdo = require('./customers');
 
 let dao = new cdo.CustomersDAO();
-
-// for the first time of testing, uncomment following lines.
-
 dao.create({
     id: "123",
     username: "sherlock",
@@ -15,7 +12,6 @@ dao.create({
 }).then(() => {
     dao.delete({id:"234"},{tenant: "Mr. Watson"});
 });
-
-dao.retrieveByTemplate({username: 'zhuzilin'}).then((res) => {
+dao.retrieveByTemplate({username: 'sherlock'}).then((res) => {
     console.log(res);
-})
+});

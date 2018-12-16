@@ -3,7 +3,6 @@ const AWS = require('aws-sdk');
 // Set region
 AWS.config.update({region: 'us-east-1'});
 
-
 let sendEvent = function(subject, msg) {
 
     let params = {

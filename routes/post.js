@@ -13,7 +13,7 @@ let search = function(req, res, next) {
     let users = JSON.parse(req.query.users);
     logging.debug_message(moduleName+functionName + " users  = ", req.users);
     bo.search({users}).then((result) => {
-        res.status(200).json(result.Items);
+        res.status(200).json(result);
     }, (err) => {
         console.log(err);
         res.status(500).send("Internal error.");
@@ -59,12 +59,29 @@ let post = function(req, res, next) {
         console.log(e);
         res.status(500).send("Internal error");
     }
-
-
 };
 
 let del = function(req, res, next) {
-
+    let data = req.body;
+    let functionName = '.del ';
+    logging.debug_message(moduleName+functionName + "body  = ", data);
+    try {
+        bo.del(data).then(
+            function(result) {
+                if (result) {
+                    console.log(result);
+                    res.status(200).json(result);
+                }
+            },
+            function(error) {
+                console.log(error);
+                res.status(500).send("Internal error")
+            }
+        );
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Internal error");
+    }
 };
 
 exports.search = search;

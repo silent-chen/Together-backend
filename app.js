@@ -7,6 +7,7 @@ let path = require('path');
 let morgan = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
+
 let logging = require('./utils/logging');
 let middleware = require('./utils/middlewares');
 
@@ -16,12 +17,15 @@ let post = require('./routes/post');
 let login = require('./routes/login');
 let register = require('./routes/register');
 let oauth = require('./routes/oauth');
+let search = require('./routes/search');
+let check = require('./routes/check');
+let verify = require('./routes/verify');
 
 const app = express();
 
 // http request log to terminal
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
@@ -41,7 +45,7 @@ app.post('/api/customers', customers.post);
 app.get('/api/post', post.search);
 app.get('/api/post/:username', post.getByUsername);
 app.post('/api/post/:username', post.post);
-app.delete('/api/post/:username', post.del);
+app.delete('/api/post', post.del);
 
 // friend
 app.get('/api/friends', friends.get);
@@ -50,7 +54,17 @@ app.get('/api/friends/:username', friends.getByUsername);
 
 app.post('/api/register', register.post);
 app.post('/api/login', login.post);
+app.get('/api/oauth',oauth.get);
 app.post('/api/oauth', oauth.post);
+
+// search users
+app.get('/api/search', search.searchUsers);
+
+//check the username
+app.get('/api/check', check.checkUsername);
+
+//change email status
+app.post('/api/verify', verify.changeStatus);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -64,7 +78,6 @@ app.use(function(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-
     // render the error page
     res.status(err.status || 500).json({ error: err.status || 500 });
 });

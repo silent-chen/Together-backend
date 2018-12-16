@@ -4,15 +4,39 @@ const return_codes = require('../../utils/return_codes');
 const logging = require('../../utils/logging');
 const notification = require('../../utils/notification');
 
+let env = process.env.eb_environment;
+if(!env) {
+    env = 'local';
+}
+
 let register = function(data, context) {
     return new Promise(function(resolve, reject) {
-        cbo.create(data, context).then(
+        cbo.retrieveByTemplate({username: data.username}).then(
+            (result) => {
+            if (result.length === 0){
+                return cbo.retrieveByTemplate({email: data.email, method: data.method})
+            }
+            else {
+                resolve("username exists")
+            }
+        })
+            .then((result)=>{
+                if (result.length === 0) {
+                    console.log(data, context);
+                    return cbo.create(data, context);
+                }
+                else {
+                    resolve("email exists")
+                }
+            })
+            .then(
             function(c) {
                 let claim = security.generate_customer_claims(c, context);
                 let result = return_codes.codes.login_success;
                 result.token = claim;
                 result.username = c.username;
                 resolve(result);
+                data.env = env;
                 notification.registrationNotification(data);
             },
             function(error) {
@@ -20,7 +44,6 @@ let register = function(data, context) {
                 reject(error);
             }
         )
-    });
-};
-
+    }
+)};
 exports.register = register;
