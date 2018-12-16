@@ -26,7 +26,7 @@ const env = {
         google: {
             client_id: "462371211250-e76694n7mc2er63a7g46usttqsqffghf.apps.googleusercontent.com",
             client_secret: "e5Z1Do4CG2oB1vgPnDCyB2XG",
-            redirect_url: "http://together-e6156.s3-website-us-east-1.amazonaws.com//oauth/google",
+            redirect_url: "http://together-e6156.s3-website-us-east-1.amazonaws.com/oauth/google",
         }
         // Twitter
 
