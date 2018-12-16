@@ -25,7 +25,7 @@ const app = express();
 
 // http request log to terminal
 app.use(morgan('dev'));
-app.use(bodyParser.json({limit: '2mb'}));
+app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
