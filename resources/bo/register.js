@@ -4,14 +4,10 @@ const return_codes = require('../../utils/return_codes');
 const logging = require('../../utils/logging');
 const notification = require('../../utils/notification');
 
-let environment_name = process.env.eb_environment;
-if(!environment_name) {
-    environment_name = 'local';
+let env = process.env.eb_environment;
+if(!env) {
+    env = 'local';
 }
-
-logging.debug_message("environment_name = ", environment_name);
-
-const env = require('../../env').getEnv(environment_name);
 
 let register = function(data, context) {
     return new Promise(function(resolve, reject) {
