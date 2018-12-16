@@ -4,7 +4,7 @@ const env = {
         username: "together",
         password: "together",
         options: {
-            host: "aa5o30emd02tmi.c1sient9tsgr.us-east-1.rds.amazonaws.com",
+            host: "aa1qsqavich6j6m.c1sient9tsgr.us-east-1.rds.amazonaws.com",
             dialect: 'mysql',
             operatorsAliases: false,
 
