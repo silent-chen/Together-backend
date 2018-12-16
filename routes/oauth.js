@@ -83,11 +83,10 @@ let post = function(req, response, next) {
     }
 };
 let createConnection = function() {
-    const redirect_url = "http://localhost:5000/oauth/google";
     return new google.auth.OAuth2(
         env.google.client_id,
         env.google.client_secret,
-        redirect_url
+        env.google.redirect_url
     );
 };
 
