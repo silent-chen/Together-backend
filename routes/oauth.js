@@ -16,7 +16,7 @@ let get = function(req, res) {
     logging.debug_message("query  = ", req.query);
     try {
         let url =  googleOath();
-        res.status(200).send(url);
+        res.status(200).send({url});
     }
     catch (e) {
         logging.error_message("e = " + e);
@@ -26,13 +26,14 @@ let get = function(req, res) {
 
 let post = function(req, response, next) {
 
+
     let context = {tenant: req.tenant};
     let functionName = "post:";
 
     const data = req.body;
     const site = data.site;
     const code = data.code;
-
+    console.log("req de body =",data);
     logging.debug_message(moduleName + functionName + "body  = ", data);
     if(site === 'github') {
         const client_id = env.github.client_id;
@@ -67,19 +68,36 @@ let post = function(req, response, next) {
             response.send(JSON.stringify({ authorized: false }));
         });
     } else if (site === 'google') {
-        let googlecode = "4/tQCFaFJumr0vALgurvj1P_7is02ccsuxC2G-0A6duGBH1J1bMfEbxKgRgd1YrK_C-Q1HloMHSWKtW9rZswtyb80&scope=openid%20email%20https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/plus.me";
-        getGoogleAccountFromCode(googlecode);
+        getGoogleAccountFromCode(code).then((res) => {
+            let data = { email: res.data.email, username: res.data.name };
+            obo.checkCustomer(data, site, context).then((result) =>{
+                    response.status(200).json(result);
+                },
+                (err) =>{
+                    response.status(400).json(err)
+                }
+            );
+        }, (err) => {
+            //console.log(err);
+        })
     }
 };
+let createConnection = function() {
+    const redirect_url = "http://localhost:5000/oauth/google";
+    return new google.auth.OAuth2(
+        env.google.client_id,
+        env.google.client_secret,
+        redirect_url
+    );
+};
+
+let auth = createConnection();
 
 let googleOath = function () {
-    const client_id = env.google.client_id;
-    const client_secret = env.google.client_secret;
-    const redirect_url = "http://localhost:5000/oauth/google"
-    let auth = new google.auth.OAuth2(client_id, client_secret, redirect_url);
     const defaultScope = [
         'https://www.googleapis.com/auth/userinfo.email',
-      ];
+        'https://www.googleapis.com/auth/userinfo.profile'
+    ];
     const url = auth.generateAuthUrl({
         scope: defaultScope
     });
@@ -88,32 +106,17 @@ let googleOath = function () {
 };
 
 let getGoogleAccountFromCode = function (code) {
-    const auth = createConnection();
-    auth.getToken(code).then((data) => {
-        console.log("data ++++++++++++ ", data)
-        const token = data.token;
-        auth.setCredentials(token);
-
-        const plus = google.plus({ version: 'v1', auth });
-        const me = plus.people.get({ userId: 'me' }).then((me) => {
-            const userGoogleId = me.data.id;
-            const userGoogleEmail = me.data.emails && me.data.emails.length && me.data.emails[0].value;
-        });
-        
-        console.log("id=====================: ", userGoogleId, " email: ", userGoogleEmail, " token: ", token);
-
+    return auth.getToken(code).then((data) => {
+        const token = data.tokens;
+        return axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
+            headers: {
+                'Authorization': `Bearer ${token.access_token}`
+            }
+        })
     });
-    
 };
 
-let createConnection = function() {
-    const redirect_url = "http://localhost:5000/oauth/google"
-    return new google.auth.OAuth2(
-      env.google.clientId,
-      env.google.clientSecret,
-      redirect_url
-    );
-};
+
 
 exports.post = post;
 exports.get = get;
