@@ -22,12 +22,13 @@ let checkUsername =  function(req, res, next) {
         let template = {username: req.query.username};
         bo.retrieveByTemplate(template, fields, context).then(
             function (result) {
+                console.log(result);
                 if (result.length === 0)
                 {
-                    res.status(200).json({check: true})
+                    res.status(200).json({check: false})
                 }
                 else {
-                    res.status(200).json({check: false})
+                    res.status(200).json({check: true})
                 }
             },
             function (error) {
