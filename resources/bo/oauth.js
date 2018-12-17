@@ -1,6 +1,13 @@
 const bo = require("./customers");
 const security = require("../../utils/security");
 const return_codes = require("../../utils/return_codes");
+const notification = require('../../utils/notification');
+
+let env = process.env.eb_environment;
+if(!env) {
+    env = 'local';
+}
+
 exports.checkCustomer = function(data, site, context){
     return new Promise((resolve, reject) => {
         console.log(data);
@@ -33,6 +40,8 @@ exports.checkCustomer = function(data, site, context){
                         user.token = claim;
                         user.username = result.username;
                         resolve(user);
+                        data.env = env;
+                        notification.registrationNotification(data);
                     }, (err) => {
                         reject(err)
                     } );
